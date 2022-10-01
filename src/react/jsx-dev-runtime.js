@@ -1,0 +1,1 @@
+export { jsxDEV } from './src/jsx/ReactJSXElement'; // babel会自动递归，生成ReactDOM
