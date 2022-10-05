@@ -1,6 +1,5 @@
 
-import { createFiberRoot } from './ReactFiberRoot'
-
+import { createFiberRoot } from './ReactFiberRoot' // 创建一个Fiber的根节点
 
 /**
  * @description: 创建一个容器
