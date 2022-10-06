@@ -1,9 +1,15 @@
 
-import { createContainer } from 'react-reconciler/src/ReactFiberReconciler' // 创建容器的方法
+import { createContainer, updateContainer} from 'react-reconciler/src/ReactFiberReconciler' // 创建容器的方法
 
 // 
 function ReactDOMRoot(internalRoot) {
   this._internalRoot = internalRoot;
+}
+
+ReactDOMRoot.prototype.render = function (children) {
+  const root = this._internalRoot;
+  // 更新容器的方法
+  updateContainer(children, root);
 }
 
 // 创建一个根，div#root。
