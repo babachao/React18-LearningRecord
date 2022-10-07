@@ -1,3 +1,4 @@
+import { markUpdateLaneFromFiberToRoot } from "./ReactFiberConcurrentUpdates";
 
 // 创建一个更新队列
   export function initialUpdateQueue(fiber) {
@@ -23,17 +24,19 @@
    */
   export function enqueueUpdate(fiber, update){
     const updateQueue = fiber.updateQueue;
-    const pending = updateQueue.pending;
+    const pending = updateQueue.shared.pending;
     // pending: 指向最后一个更新
     // pending.next: 指向第一个更新
-    if (pending) {
+    if (pending === null) {
+      // 当没有pending没有时
       update.next = update;
     }else{
-      // 当没有pending没有时
       update.next = pending.next; // update的next -> 指向第一个更新（自己）
       pending.next = update; // 这是pending指向第一个更新（自己），所以pengind.next要指向下一个更新
     }
     // pending要指向最后一个更新
     // 最后一个更新，next指向第一个更新
     updateQueue.shared.pending = update;
+    // 返回根节点, 从当前的Fiber一直到根节点 -> 标记更新从Fiber到根节点的赛道
+    return markUpdateLaneFromFiberToRoot(fiber);
   }

@@ -28,7 +28,7 @@ export function FiberNode(tag, pendingProps, key) {
   // 类组件对应的fiber存的就是类的实例的状态， HostRoot -> 根fiber存的就是要渲染的元素
   this.memoizedState = null; // 已经生效的属性
   // 每个fiber身上可能还有更新队列
-  this.uppdateQueue = null;
+  this.updateQueue = null;
   // 自己的副作用标识， 标示要针对此fiber节点进行任何操作 -> 为了性能优化
   // React执行分两个阶段-> 1、render 计算副作用 2、commit修改真实DOM, 或者说提交副作用
   this.flags = NoFlags;
