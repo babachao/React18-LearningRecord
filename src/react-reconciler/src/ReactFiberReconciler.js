@@ -1,7 +1,7 @@
 
 import { createFiberRoot } from './ReactFiberRoot' // 创建一个Fiber的根节点
 import { createUpdate, enqueueUpdate } from './ReactFiberClassUpdateQueue';
-import { markUpdateLaneFromFiberToRoot } from './ReactFiberConcurrentUpdates'
+import { schedeleUpdateOnFiber} from './ReactFiberWorkLoop'; // fiber工作循环
 /**
  * @description: 创建一个容器
  * @param {*} containerInfo 容器信息
@@ -22,7 +22,9 @@ export function updateContainer(element, container){
   const update = createUpdate();
   // 要更新的虚拟DOM
   update.payload = { element };
-  // 将更新对象【update】添加到current这个根Fiber的更新队列上去，-> 入队
+  // 将更新对象【update】添加到current这个根Fiber的更新队列上去，-> 入队,再返回根节点
   const root = enqueueUpdate(current, update);
+  // 在fiber上调度更新
+  schedeleUpdateOnFiber(root)
   console.log('----.', root);
 }

@@ -55,3 +55,14 @@ export function createFiber(tag, pendingProps, key){
 export function createHostRootFiber() {
   return createFiber(HostRoot, null, null)
 }
+
+/**
+ * @description:  基于老的fiber和新的属性创建新的fiber
+ * 参考图：https://static.zhufengpeixun.com/di_gui_gou_jian_fiber_shu_1664076989593.jpg
+ * @param {*} current 老的fiber
+ * @param {*} pendingProps 新的属性
+ * @author: huchao
+ */
+export function createWorkInProgress(current, pendingProps) {
+  let workInProgress = current.alternate; // 拿到老Fiber的轮替
+}
