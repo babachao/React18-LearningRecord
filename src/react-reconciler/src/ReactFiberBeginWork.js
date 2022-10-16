@@ -9,11 +9,11 @@ import { HostRoot, HostComponent, HostText } from "./ReactWorkTags";
  */
 function updateHostRoot(current, workInProgress) {
   // 1、需要知道它的子虚拟DOM（知道它儿子的虚拟DOM信息），它被存放在更新队列中
-  // processUpdateQueue(workInProgress); // workInProgress.memoizedState = { element }
+  processUpdateQueue(workInProgress); // workInProgress.memoizedState = { element }
   const nextState = workInProgress.memoizedState;
   const nextChildren = nextState.element; // 新的虚拟DOM
   // 协调子节点， DOM-DIFF算法在此方法中
-  // reconcileChildren(current, workInProgress, nextChildren)
+  reconcileChildren(current, workInProgress, nextChildren)
    // 第一次挂载，child肯定是为空的
   return workInProgress.child; // {tag: 5, type: 'h1' }
 }
