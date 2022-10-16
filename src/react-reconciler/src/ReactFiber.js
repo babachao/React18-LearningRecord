@@ -64,5 +64,29 @@ export function createHostRootFiber() {
  * @author: huchao
  */
 export function createWorkInProgress(current, pendingProps) {
-  let workInProgress = current.alternate; // 拿到老Fiber的轮替
+  let workInProgress = current.alternate; // 拿到老Fiber的轮替，第一次为null
+  // 如果没有正在执行的任务，current的alternate指向没有fiber
+  // 则创建一个新的Fiber
+  if (workInProgress === null) {
+    workInProgress = createFiber(current.tag, pendingProps, current.key);
+    workInProgress.type = current.type; // 拷贝老Fiber的类型
+    workInProgress.stateNode = current.stateNode; // 拷贝老Fiber的静态节点
+    // 双向指向
+    workInProgress.alternate = current;
+    current.alternate = workInProgress;
+  }
+  // else 说明是有Fiber，则更新Fiber
+  else{
+    workInProgress.pendingProps = pendingProps;
+    workInProgress.type = current.type;
+    workInProgress.flags = NoFlags;
+    workInProgress.subtreeFlags = NoFlags;
+  }
+  workInProgress.child = current.child;
+  workInProgress.memoizedProps = current.memoizedProps;
+  workInProgress.memoizedState = current.memoizedState;
+  workInProgress.sibling = current.sibling;
+  workInProgress.index = current.index;
+
+  return workInProgress
 }
